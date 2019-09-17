@@ -1,0 +1,43 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    
+	// Write your code here
+	int t;
+    cin>>t;
+    int *cubefree = new int[1000001]();
+    cubefree[0] = -1;
+    cubefree[1] = 0;
+    for(int i=2;i<=100;i++){
+        int num = i*i*i;
+        if(cubefree[i]==0){
+            for(int j=num;j<=1000000;j+=num){
+                cubefree[j] = -1;
+            }    
+        }
+    }
+    int count = 0;
+    for(int i=1;i<=1000000;i++){
+        if(cubefree[i]==0){
+            count++;
+            cubefree[i] = count;
+            
+        }
+        else{
+            cubefree[i] = count;
+            continue;
+        }
+        
+    }
+    for(int i=0;i<t;i++){
+        int num;
+        cin>>num;
+        if(cubefree[num]==cubefree[num-1]){
+            cout<<"Case "<<i+1<<": "<<"Not Cube Free"<<endl;    
+        }
+        else
+            cout<<"Case "<<i+1<<": "<<cubefree[num]<<endl;
+    }
+    return 0;
+}
