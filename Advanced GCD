@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+using namespace std;
+int Euclidgcd(int a,int b){
+    if(b==0)
+        return a;
+    return Euclidgcd(b,a%b);
+}
+int main(){
+	// Write your code here
+	int t;
+    cin>>t;
+    while(t--){
+        int a;
+        cin>>a;
+        string b;
+        cin>>b;
+        if(b.empty()){
+            cout<<a<<endl;
+        }
+        else if(a==0){
+            cout<<b<<endl;
+        }
+        else{
+            int i=0;
+        int number = 0;
+        while(i<b.length()){
+            int num = b[i]-'0';
+            int n = (number*10 + num)%a;
+            number = n;
+            i++;
+        }
+        //cout<<number<<endl;
+       cout<<Euclidgcd(a,number)<<endl;    
+    }
+        
+    }
+    
+    return 0;
+}
