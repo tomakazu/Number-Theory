@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long int
+ll modularexpo(ll i,ll p,ll mod){
+    ll ans = 1;
+    while(p!=0){
+        if(p&1==1){
+            ans = (ans*i)%mod;
+        }
+        i = (i*i)%mod;
+        p = p/2;
+    }
+    return ans%mod;
+}
+ll factorialmodulo(ll n,ll p){
+    ll i = n+1;
+    ll ans = 1;
+    while(i<=p-1){
+        ll s = modularexpo(i,p-2,p);
+		ans = ((ans)%p*(s)%p)%p;
+		i++;
+    }
+    ans = ans%p;
+    return p-ans;
+}
+int main() {
+
+	// Write your code here
+    int t;
+    cin>>t;
+    while(t--){
+    	int n,p;
+    	cin>>n>>p;
+        if(n>=p){
+            cout<<"0"<<endl;
+        }
+        else
+    	    cout<<factorialmodulo(n,p)<<endl;
+	}
+    
+    
+}
