@@ -1,0 +1,81 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define mod 1000000007
+#define mod1 1000000006
+void multiply(ll A[2][2],ll M[2][2]){
+
+	ll firstValue = (((A[0][0])%mod1 * (M[0][0])%mod1)%mod1 + ((A[0][1])%mod1 * (M[1][0])%mod1)%mod1)%mod1;
+	ll secondValue = (((A[0][0])%mod1 * (M[0][1])%mod1)%mod1 + ((A[0][1])%mod1 * (M[1][1])%mod1)%mod1)%mod1;
+	ll thirdValue = (((A[1][0])%mod1 * (M[0][0])%mod1)%mod + ((A[1][1])%mod1 * (M[1][0])%mod1)%mod1)%mod1;
+	ll fourthValue = (((A[1][0])%mod1 * (M[0][1])%mod1)%mod1 + ((A[1][1])%mod1 * (M[1][1])%mod1)%mod1)%mod1;
+
+	A[0][0] =firstValue%mod1;
+	A[0][1] = secondValue%mod1;
+	A[1][0] = thirdValue%mod1;
+	A[1][1] = fourthValue%mod1;
+	
+}
+
+void power(ll A[2][2],ll n){
+    if(n==1||n==0){
+        return;
+    }
+    power(A,n/2);
+    multiply(A,A);
+    if(n%2!=0){
+        ll M[2][2] = {{1,1},{1,0}};
+        multiply(A,M);
+    }
+}
+ll fib(ll n){
+    if(n==1||n==0){
+        return 1;
+    }
+    ll A[2][2] = {{1,1},{1,0}};
+    power(A,n-1);
+    return A[0][0]%mod;
+}
+ll gib(ll x,ll y,ll n){
+    ll pow1 = fib(n-1)%(mod1);
+    ll pow2 = fib(n)%(mod1);
+    ll ans1 = 1,ans2 = 1;
+	x++;
+	y++;
+	while(pow1!=0){
+        if(pow1&1==1){
+            ans1 = ((ans1%mod)*(x%mod))%mod;
+		}
+        x = ((x%mod)*(x%mod))%mod;
+        pow1 = pow1/2;
+    }
+    while(pow2!=0){
+        if(pow2&1==1){
+            ans2 = ((ans2%mod)*(y%mod))%mod;
+        }
+        y = ((y%mod)*(y%mod))%mod;
+        pow2 = pow2/2;
+    }
+    ll ans = ((ans1%mod)*(ans2%mod))%mod;
+    return ans;
+}
+int main() {
+
+	// Write your code here
+    int t;
+    cin>>t;
+    while(t--){
+        ll x,y,n;
+        cin>>x>>y>>n;
+        if(n==0){
+            cout<<x<<endl;
+            continue;
+        }
+        if(n==1){
+            cout<<y<<endl;
+            continue;
+        }
+        ll g = gib(x,y,n)%mod;        
+        cout<<g-1<<endl;
+    }
+}
