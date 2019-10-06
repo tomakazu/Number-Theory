@@ -1,0 +1,36 @@
+#include<bits/stdc++.h>
+using namespace std;
+const int mod = pow(10,9)+7;
+int main(){
+	// Write your code here
+    int t;
+    cin>>t;
+    while(t--){
+        int n;
+        cin>>n;
+        int *array = new int[n];
+        for(int i=0;i<n;i++){
+            cin>>array[i];
+        }
+        sort(array,array+n);
+        int *sieve = new int[array[n-1]+1]();
+        for(int i=0;i<n;i++){
+            sieve[array[i]] = 1;
+        }
+        for(int i=0;i<=array[n-1];i++){
+            if(sieve[i]>0){
+                for(int j=2*i;j<=array[n-1];j+=i){
+                    if(sieve[j]>0){
+                        sieve[j]=(sieve[i]%mod + sieve[j]%mod)%mod;
+                    }
+                }
+            }
+        }
+        int sum = 0;
+        for(int i=0;i<=array[n-1];i++){
+            sum = (sieve[i]%mod + sum%mod)%mod;
+        }
+        cout<<sum<<endl;
+    }
+	return 0;
+}
