@@ -1,0 +1,53 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define mod 1000000007
+#define N 1000000
+#define ll long long int
+ll power(ll base, ll x){
+    ll ans = 1; 
+    while(x!=0){
+            if(x&1==1){
+                ans = ((ans%mod)*(base%mod))%mod;
+            }
+        base = ((base%mod)*(base%mod))%mod;
+        x = x/2;
+    }
+    return ans;
+}
+int main() {
+
+	// Write your code here
+    int t;
+    cin>>t;
+    ll *dp = new ll[N];
+    dp[0] = 1;
+    dp[1] = 1;
+    for(int i=2;i<=N;i++){
+        dp[i] = ((dp[i-1]%mod)*(i%mod))%mod;
+    }
+    while(t--){
+        ll n,k;
+        cin>>n>>k;
+        ll two = 2;
+        // 2 raise to the power k
+        ll ans1 = power(2,k);
+    //    cout<<ans1<<endl;
+        //calculate n!
+        ll ans2 = dp[n];
+        // calculate n-k inverse factorial
+    //    cout<<ans2<<endl;
+		ll ans3 = dp[n-k];
+        ll temp = power(ans3,mod-2);
+        ans3 =  temp;
+    //    cout<<ans3<<endl;
+        //calculate k inverse factorial
+        ll ans4 = dp[k];
+        temp = power(ans4,mod-2);
+        ans4 = temp;
+     //   cout<<ans4;
+        ll tempans1 = ((ans1%mod)*(ans2%mod))%mod;
+        ll tempans2 = ((ans3%mod)*(ans4%mod))%mod;
+        ll ans = ((tempans1%mod)*(tempans2%mod))%mod;
+        cout<<ans<<endl;
+    }
+}
